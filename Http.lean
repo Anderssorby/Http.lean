@@ -6,6 +6,8 @@ import Http.Headers
 
 namespace Http
 
+abbrev ClientM := ReaderM
+
 namespace Client
 
 def request (method : Method) (url : URI) (body : Option String) :

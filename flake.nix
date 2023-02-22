@@ -71,13 +71,21 @@
         checks.test = test.executable;
 
         defaultPackage = self.packages.${system}.Cli.executable;
-        devShell = pkgs.mkShell {
-          inputsFrom = [ project.executable ];
-          buildInputs = with pkgs; [
-            leanPkgs.lean-dev
-          ];
-          LEAN_PATH = "./src:./test:" + joinDepsDerivations (d: d.modRoot);
-          LEAN_SRC_PATH = "./src:./test:" + joinDepsDerivations (d: d.src);
+        devShells = {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              elan
+            ];
+            LEAN_PATH = "./src:./test";
+            LEAN_SRC_PATH = "./src:./test";
+          };
+          lean-dev = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              leanPkgs.lean-dev
+            ];
+            LEAN_PATH = "./src:./test";
+            LEAN_SRC_PATH = "./src:./test";
+          };
         };
       });
 }
